@@ -39,3 +39,42 @@ const $controls = document.getElementById('controls')
 /**********************************************
  * YOUR CODE BELOW
  **********************************************/
+
+const tiles = []
+const controls = []
+
+for (const color of colors) {
+  controls.push(`<button class="button">${color}</button>`)
+  for (const letter of letters) {
+    tiles.push({
+      color,
+      letter
+    })
+  }
+}
+
+console.log(controls)
+
+$controls.innerHTML = controls.join('')
+
+const shuffled = shuffle(tiles)
+
+$tiles.innerHTML = shuffled.map(function (tile) {
+  return `<div class="tile">
+  <div class="front" style="color: ${tile.color}">${tile.letter}</div>
+  <div class="back"></div>
+</div>`
+}).join('')
+
+console.log(shuffled)
+
+$controls.addEventListener('click', function (e) {
+  if (e.target.classList.contains('button')) {
+    $tiles.innerHTML = shuffled.map(function (tile) {
+      return `<div class="tile ${e.target.textContent === tile.color ? 'flip' : ''}">
+      <div class="front" style="color: ${tile.color}">${tile.letter}</div>
+      <div class="back"></div>
+    </div>`
+    }).join('')
+  }
+})
